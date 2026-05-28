@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Reddit Trust & Safety",
+  "version": "1.0.0",
+  "description": "Analyzes Reddit post credibility using AI",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.reddit.com/*"],
+      "js": ["content.js"],
+      "css": ["widget.css"]
+    }
+  ]
+}
