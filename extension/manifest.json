@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Reddit Trust & Safety",
+  "name": "Reddit FactGuard",
   "version": "1.0.0",
-  "description": "Analyzes Reddit post credibility using AI",
+  "description": "Analyzes Reddit post credibility using AI - FactGuard",
   "permissions": ["activeTab"],
+  "host_permissions": [
+    "http://localhost:8000/*"
+  ],
   "content_scripts": [
     {
       "matches": ["*://*.reddit.com/*"],

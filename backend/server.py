@@ -1,47 +1,36 @@
 """
 Reddit Trust & Safety - Backend Server
-Run with: uvicorn server:app --reload
+Run with: python server.py
 """
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-app = FastAPI(title="Reddit Trust & Safety API")
-
-# Allow requests from the Chrome extension
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = Flask(__name__)
+CORS(app)
 
 
-class PostData(BaseModel):
-    title: str = ""
-    author: str = ""
-    subreddit: str = ""
-
-
-class AnalysisResult(BaseModel):
-    credibility_score: int
-    status: str
-
-
-@app.post("/analyze", response_model=AnalysisResult)
-async def analyze_post(post: PostData):
+@app.route("/analyze", methods=["POST"])
+def analyze_post():
     """
     Analyze a Reddit post for credibility.
     Currently returns a dummy score - replace with real AI logic later.
     """
-    print(f"[Analyze] title={post.title!r}, author={post.author!r}, subreddit={post.subreddit!r}")
+    data = request.get_json()
+    title = data.get("title", "")
+    author = data.get("author", "")
+    subreddit = data.get("subreddit", "")
+
+    print(f"[Analyze] title={title!r}, author={author!r}, subreddit={subreddit!r}")
 
     # TODO: Replace with actual AI analysis
-    return AnalysisResult(credibility_score=75, status="analyzed")
+    return jsonify({"credibility_score": 75, "status": "analyzed"})
 
 
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000, debug=True)
