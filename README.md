@@ -45,11 +45,3 @@ You can verify it's running by visiting `http://localhost:8000/health`.
 4. The extension sends the data to the backend (`POST /analyze`)
 5. The backend returns a credibility score (currently a dummy value of 75)
 6. The widget updates with the score
-
-## Next Steps
-
-- [ ] Implement real AI credibility analysis in `server.py`
-- [ ] Add account age / karma checks via Reddit API
-- [ ] Analyze post history patterns
-- [ ] Add sentiment analysis on post content
-- [ ] Improve scraping for different Reddit layouts
